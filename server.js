@@ -5,6 +5,9 @@ var express = require('express'),
 
 app.use(bodyParser());
 app
+  // INSERT OTHER ROUTE HERE
+
+  // -----------------------
  .use(express.static('./public'))
  .get('*', function (req, res) {
    res.sendfile('public/main.html')
