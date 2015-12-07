@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="WheelApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wheel App</title>
+  <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
+  <script src="lib/angular/angular.min.js"></script>
+  <script src="lib/angular-route"></script>
+  <script src="lib/angular-resource"></script>
+</head>
+<body ng-controller="mainController">
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Wheel App</a>
+    </div>
+    <div>
+      <ul class="nav navbar-nav pull-right">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#/login">Sign In</a></li>
+        <li><a href="#/signup">Sign Up</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<main>
+  <div class="row">
+    <div class="col-sm-12" ng-view></div>
+  </div>
+</main>
+</body>
+</html>
