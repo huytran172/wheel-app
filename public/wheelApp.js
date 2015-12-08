@@ -12,5 +12,9 @@ angular.module('WheelApp', ['ngRoute', 'ngResource'])
     .when('/signup', {
       templateUrl: 'views/signup.html',
       controller: 'authController'
-    });
+    })
+    .when('/about', {
+      templateUrl: 'views/about.html',
+      controller: 'aboutController'
+    })
 });
