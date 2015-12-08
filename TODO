@@ -65,7 +65,7 @@ var ListColors = $resource('/color/:userID', {userID:'@id'});
 var colors = ListColors.get({userId: current_user.userID}, function(data) {
   $scope.colors = data;
 });
-- Show color in a creative way, animation: flip to show the time color being created
+- Show color in a creative way, animation: flip to show the time color being created, I'm thinking of METRO design
 
 **** Note: DEADLINE: by weekend
 Expected technology stacks: MEAN stack, passport for authentication, (The stopwatch: further discuss)
