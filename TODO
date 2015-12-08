@@ -49,4 +49,32 @@ else send error_message if !authenticated
   ...
 ]
 
+Angular Front End
+1. #/main
+- Display color, style, animation (need super fancy)
+
+2. #/login, #/signup
+- post auth/login
+IF success
+- update $rootScope.current_user and $rootScope.authenticated
+- redirect #/user
+
+3. #/user (user.html, userController)
+- get colors/:id
+var ListColors = $resource('/color/:userID', {userID:'@id'});
+var colors = ListColors.get({userId: current_user.userID}, function(data) {
+  $scope.colors = data;
+});
+- Show color in a creative way, animation: flip to show the time color being created
+
+**** Note: DEADLINE: by weekend
+Expected technology stacks: MEAN stack, passport for authentication, (The stopwatch: further discuss)
+
+4. #/THE FREAKING BUTTON
+.
+.
+.
+.
+.
+
 
