@@ -10,7 +10,7 @@ app
   // -----------------------
  .use(express.static('./public'))
  .get('*', function (req, res) {
-   res.sendfile('public/main.html')
+   res.sendfile('public/index.html')
  })
  .listen(port);
 
