@@ -24,6 +24,8 @@
       <ul class="nav navbar-nav pull-right">
         <li ng-hide="authenticated"><a href="#/login">Log In</a></li>
         <li ng-hide="authenticated"><a href="#/signup">Sign Up</a></li>
+        <li ng-show="authenticated"><a href="">{{ currentUser }}</a></li>
+        <li ng-show="authenticated" ng-click="signout()"><a href="">Sign Out</a></li>
         <li><a href="#/about">About</a></li>
       </ul>
     </div>

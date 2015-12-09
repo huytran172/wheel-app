@@ -1,6 +1,6 @@
 angular.module('WheelApp', ['ngRoute', 'ngResource'])
   // Initialization and log out
-  .run(function ($rootScope, $http) {
+  .run(function ($rootScope, $http, $location) {
     // No user logged in
     $rootScope.authenticated = false;
     $rootScope.currentUser = "";
@@ -9,6 +9,8 @@ angular.module('WheelApp', ['ngRoute', 'ngResource'])
       $http.get('auth/signout');
       $rootScope.authenticated = false;
       $rootScope.currentUser= '';
+
+      $location.path('/');
     };
   })
   // Routing Configuration
@@ -29,6 +31,10 @@ angular.module('WheelApp', ['ngRoute', 'ngResource'])
     .when('/about', {
       templateUrl: 'views/about.html',
       controller: 'aboutController'
+    })
+    .when('/user', {
+      templateUrl: 'views/user.html',
+      controller: 'userController'
     })
   });
 
