@@ -32,11 +32,11 @@ angular.module('WheelApp')
     // MOCK LOGIN
     $scope.login = function () {
       // success
-      //$location.path('/user');
-      //$rootScope.currentUser = "Huy Tran";
-      //$rootScope.authenticated = true;
+      $location.path('/user');
+      $rootScope.currentUser = "Huy Tran";
+      $rootScope.authenticated = true;
 
       // fail
-      $scope.error_message = "Invalid user or password";
+      // $scope.error_message = "Invalid user or password";
     }
   });

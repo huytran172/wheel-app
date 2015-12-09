@@ -12,6 +12,11 @@ angular.module('WheelApp', ['ngRoute', 'ngResource'])
 
       $location.path('/');
     };
+    $rootScope.redirectToUserPage = function () {
+      if ($rootScope.authenticated) {
+        $location.path('/user');
+      }
+    }
   })
   // Routing Configuration
   .config(function ($routeProvider) {
