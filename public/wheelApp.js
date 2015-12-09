@@ -1,4 +1,4 @@
-angular.module('WheelApp', ['ngRoute', 'ngResource', 'ui.router'])
+angular.module('WheelApp', ['ngRoute', 'ngResource'])
   // Initialization and log out
   .run(function ($rootScope, $http) {
     // No user logged in
@@ -12,27 +12,23 @@ angular.module('WheelApp', ['ngRoute', 'ngResource', 'ui.router'])
     };
   })
   // Routing Configuration
-  .config([function ($stateProvider) {
-  $stateProvider
-    .state('main', {
-      url: '/',
+  .config(function ($routeProvider) {
+  $routeProvider
+    .when('/', {
       templateUrl: 'views/main.html',
       controller: 'mainController'
     })
-    .state('login', {
-      url: '/login',
+    .when('/login', {
       templateUrl: 'views/login.html',
       controller: 'authController'
     })
-    .state('signup', {
-      url: '/signup',
+    .when('/signup', {
       templateUrl: 'views/signup.html',
       controller: 'authController'
     })
-    .state('about', {
-      url: '/about',
+    .when('/about', {
       templateUrl: 'views/about.html',
       controller: 'aboutController'
     })
-  }]);
+  });
 
