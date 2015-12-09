@@ -1,4 +1,7 @@
 <div class="container">
+  <div ng-show="error_message !== ''" class="alert alert-danger">
+    {{ error_message }}
+  </div>
   <form action="" class="form-login">
     <label for="usernameInput" class="sr-only">User Name</label>
     <input ng-model="user.username" type="text" id="usernameInput" class="form-control" placeholder="User Name" required autofocus>
