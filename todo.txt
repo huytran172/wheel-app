@@ -1,0 +1,83 @@
+Database (MongoDB):
+1.User
+{
+  userID: id
+  username: username
+  password: password
+}
+
+2.ColorData
+{
+  createdBy: User.userID,
+  value: colorValue,
+  createdAt: Date.now()
+}
+
+Server: ** Please response with JSON string
+1. auth/login
+- POST: Example data {username: 'huytran', password: '123'}
+- response {state: "success", {username: name, userID: id}
+        or {state: "error"  , error_message: error}
+
+2. auth/signup
+- POST: Example data {username: 'huytran', password: '123'}
+- Authenticate, hash, add to database
+- response {state: "success",  {username: name, userID: id}}
+          or error_message
+
+4. auth/signout
+- POST
+- redirect to '/'
+
+3. colors
+- GET: Color database [value1, value2, value3 ...] // Doing some visualization if having time!!!
+- This is for the main page, everyone can see this
+
+- POST: FREAKING MAIN FUNCTION OF THE APP
+  send { createdBy: username, value: colorValue, createdAt: Date.now() }
+
+** Note: For now, just send color back and forth between client and server
+
+if username is valid
+  response {messasge: success submitted}
+else send error_message if !authenticated
+
+4. colors/:id
+- GET: All colors with associated id. (get the user id by req.params.id)
+- Expected response data type
+[
+  {
+    value: colorValue
+    createdAt: Human readable form string
+  },
+  ...
+]
+
+Angular Front End
+1. #/main
+- Display color, style, animation (need super fancy)
+
+2. #/login, #/signup
+- post auth/login
+IF success
+- update $rootScope.current_user and $rootScope.authenticated
+- redirect #/user
+
+3. #/user (user.html, userController)
+- get colors/:id
+var ListColors = $resource('/color/:userID', {userID:'@id'});
+var colors = ListColors.get({userId: current_user.userID}, function(data) {
+  $scope.colors = data;
+});
+- Show color in a creative way, animation: flip to show the time color being created, I'm thinking of METRO design
+
+**** Note: DEADLINE: by weekend
+Expected technology stacks: MEAN stack, passport for authentication, (The stopwatch: further discuss)
+
+4. #/THE FREAKING BUTTON
+.
+.
+.
+.
+.
+
