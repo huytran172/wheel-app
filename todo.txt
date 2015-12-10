@@ -1,3 +1,12 @@
+//To get server up and running: 
+install mongodb
+npm install 
+
+//use bower? grunt?
+//Travis-ci for unit testing
+
+
+
 Database (MongoDB):
 1.User
 {
