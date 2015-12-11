@@ -12,7 +12,6 @@ var express = require('express'),
 	// FacebookStrategy = require('passport-facebook'),
 app = express();
 
-var 
 
 //===============PASSPORT===============
 
@@ -55,58 +54,58 @@ app.get('*', function (req, res) {
 	// res.render('home', {user: req.user});
 });
 
-app.post('/login', passport.authenticate('local', { successRedirect: '/',
-	failureRedirect: '/login' }));
-
-//displays signup page
-app.get('/auth/signup', function(req, res){
-	res.render('signin');
-});
-
-//sends the request through our local signup strategy, and if successful takes user to homepage, otherwise returns then to signin page
-app.post('/local-reg', passport.authenticate('local-signup', {
-	successRedirect: '/',
-	failureRedirect: '/signin'
-})
-);
-
-// auth/login
-// - POST: Example data {username: 'huytran', password: '123'}
-// - response {state: "success", {username: name, userID: id}
-//         or {state: "error"  , error_message: error}
-
-//sends the request through our local login/signin strategy, and if successful takes user to homepage, otherwise returns then to signin page
-app.post('/auth/login',
-	passport.authenticate('local-signin', { 
-		successRedirect: '/',
-		failureRedirect: '/auth/login'
-	}),
-	function(req, res){
-
-	}
-	);
-
-//logs user out of site, deleting them from the session, and returns to homepage
-app.get('/logout', function(req, res){
-	var name = req.user.username;
-	console.log("LOGGIN OUT " + req.user.username)
-	req.logout();
-	res.redirect('/');
-	req.session.notice = "You have successfully been logged out " + name + "!";
-});
-
-
-//==============PORT==================
+//app.post('/login', passport.authenticate('local', { successRedirect: '/',
+//	failureRedirect: '/login' }));
+//
+////displays signup page
+//app.get('/auth/signup', function(req, res){
+//	res.render('signin');
+//});
+//
+////sends the request through our local signup strategy, and if successful takes user to homepage, otherwise returns then to signin page
+//app.post('/local-reg', passport.authenticate('local-signup', {
+//	successRedirect: '/',
+//	failureRedirect: '/signin'
+//})
+//);
+//
+//// auth/login
+//// - POST: Example data {username: 'huytran', password: '123'}
+//// - response {state: "success", {username: name, userID: id}
+////         or {state: "error"  , error_message: error}
+//
+////sends the request through our local login/signin strategy, and if successful takes user to homepage, otherwise returns then to signin page
+//app.post('/auth/login',
+//	passport.authenticate('local-signin', {
+//		successRedirect: '/',
+//		failureRedirect: '/auth/login'
+//	}),
+//	function(req, res){
+//
+//	}
+//	);
+//
+////logs user out of site, deleting them from the session, and returns to homepage
+//app.get('/logout', function(req, res){
+//	var name = req.user.username;
+//	console.log("LOGGIN OUT " + req.user.username)
+//	req.logout();
+//	res.redirect('/');
+//	req.session.notice = "You have successfully been logged out " + name + "!";
+//});
+//
+//
+////==============PORT==================
 var port = process.env.PORT || 3000; //select your port or let it pull from your .env file
 app.listen(port);
 console.log('Server is running on port ' + port);
-
-
-
-//-----------------------------------
-//index.js/
-
-
-//We will be creating these two files shortly
-// var config = require('./config.js'), //config file contains all tokens and other private info
-//    funct = require('./functions.js'); //funct file contains our helper functions for our Passport and database work
+//
+//
+//
+////-----------------------------------
+////index.js/
+//
+//
+////We will be creating these two files shortly
+//// var config = require('./config.js'), //config file contains all tokens and other private info
+////    funct = require('./functions.js'); //funct file contains our helper functions for our Passport and database work
