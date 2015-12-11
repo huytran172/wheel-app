@@ -1,5 +1,5 @@
 angular.module('WheelApp')
-  .controller('userController', function ($scope) {
+  .controller('userController', function ($scope, $rootScope, $resource) {
     $scope.colors = [];
     if ($rootScope.authenticated) {
       // GET colors associated with id
