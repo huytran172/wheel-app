@@ -4,41 +4,31 @@ angular.module('WheelApp')
     $scope.error_message = '';
 
     function authenticate(url) {
+      console.log(url + " " + $scope.user);
       $http.post(
         url,
-        JSON.stringify($scope.user)
+        $scope.user
       ).success(function putDataInScope(response) {
-          var data = response;
-          if (data.state === "success") {
-            $rootScope.authenticated = true;
+        var data = response;
+        console.log(data);
+        if (data.state === "success") {
+          $rootScope.authenticated = true;
 
-            $rootScope.currentUser = response.username;
-            $rootScope.currentPoint = response.point;
+          $rootScope.currentUser = response.user.username;
+          $rootScope.currentPoint = response.user.points;
 
-            $location.path('/');
-          }
-          else if (data.state === "error") {
-            $scope.error_message = data.error_message;
-          }
+          $location.path('/');
+        }
+        else if (data.state === "failure") {
+          $scope.error_message = data.message;
+        }
         }
       )
     }
-
     $scope.login = function () {
-      authenticate('/auth/login')
+      authenticate('/auth/login');
     };
     $scope.signup = function () {
-      authenticate('/auth/signup')
+      authenticate('/auth/signup');
     };
-
-    // MOCK LOGIN
-    //$scope.login = function () {
-    //  // success
-    //  $location.path('/');
-    //  $rootScope.currentUser = "Huy Tran";
-    //  $rootScope.authenticated = true;
-    //  $rootScope.currentPoint = 10;
-
-      // fail
-      // $scope.error_message = "Invalid user or password";
   });

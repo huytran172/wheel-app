@@ -4,19 +4,20 @@ angular.module('WheelApp', ['ngRoute', 'ngResource'])
     // No user logged in
     $rootScope.authenticated = false;
     $rootScope.currentUser = "";
+    console.log($rootScope.authenticated);
     // reset state of the app
-    $rootScope.signout = function(){
-      $http.get('auth/signout');
-      $rootScope.authenticated = false;
-      $rootScope.currentUser= '';
-
-      $location.path('/');
-    };
-    $rootScope.redirectToUserPage = function () {
-      if ($rootScope.authenticated) {
-        $location.path('/user');
-      }
-    }
+    //$rootScope.signout = function(){
+    //  $http.get('auth/signout');
+    //  $rootScope.authenticated = false;
+    //  $rootScope.currentUser= '';
+    //
+    //  $location.path('/');
+    //};
+    //$rootScope.redirectToUserPage = function () {
+    //  if ($rootScope.authenticated) {
+    //    $location.path('/user');
+    //  }
+    //}
   })
   // Routing Configuration
   .config(function ($routeProvider) {
@@ -45,5 +46,6 @@ angular.module('WheelApp', ['ngRoute', 'ngResource'])
       templateUrl: 'views/leaderboard.html',
       controller: 'boardController'
     })
+    .otherwise({ redirectTo: '/' });
   });
 

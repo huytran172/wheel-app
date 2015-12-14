@@ -1,9 +1,9 @@
 angular.module('WheelApp')
   .controller('userController', function ($location, $scope, $rootScope, $resource) {
     if ($rootScope.authenticated) {
-      // Get all question answer correctly by that user
+      // Get all question answered correctly by that user
       var Question = $resource('/questions/:userId', {userId:'@id'});
-      var questions = Question.get({userId:123}, function() {
+      var questions = Question.query({userId:123}, function() {
         $scope.questionsList = questions;
       });
     }

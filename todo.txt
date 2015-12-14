@@ -19,6 +19,7 @@ Database (MongoDB):
 2.Question Data
 {
   answerBy: User.userID,
+  answerAt: Timestamp
   question: string
   answer: string
 }
