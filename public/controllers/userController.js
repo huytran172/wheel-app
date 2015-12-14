@@ -1,11 +1,13 @@
 angular.module('WheelApp')
-  .controller('userController', function ($scope, $rootScope, $resource) {
-    $scope.colors = [];
+  .controller('userController', function ($location, $scope, $rootScope, $resource) {
     if ($rootScope.authenticated) {
-      // GET colors associated with id
-      var ListColors = $resource('/colors/:userID', {userID:'@id'});
-      ListColors.get({userId: $rootScope.currentUser.userID}, function(data) {
-        $scope.colors = data;
+      // Get all question answer correctly by that user
+      var Question = $resource('/questions/:userId', {userId:'@id'});
+      var questions = Question.get({userId:123}, function() {
+        $scope.questionsList = questions;
       });
+    }
+    else {
+      $location.url('/');
     }
   });

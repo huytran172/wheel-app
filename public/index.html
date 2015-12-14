@@ -6,7 +6,9 @@
   <title>Wheel App</title>
   <base href="/">
   <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="stylesheets/formstyle.css">
+  <script src="lib/jquery/dist/jquery.min.js"></script>
   <script src="lib/angular/angular.min.js"></script>
   <script src="lib/angular-route/angular-route.min.js"></script>
   <script src="lib/angular-resource/angular-resource.min.js"></script>
@@ -15,6 +17,8 @@
   <script src="controllers/authController.js"></script>
   <script src="controllers/userController.js"></script>
   <script src="controllers/aboutController.js"></script>
+  <script src="controllers/boardController.js"></script>
+  <script src="filters/filters.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -24,6 +28,7 @@
     </div>
     <div>
       <ul class="nav navbar-nav pull-right">
+        <li><a href="#/leaderboard">Leaderboard</a></li>
         <li ng-hide="authenticated"><a href="#/login">Log In</a></li>
         <li ng-hide="authenticated"><a href="#/signup">Sign Up</a></li>
         <li ng-show="authenticated" ng-click="redirectToUserPage()"><a href="">{{ currentUser }}</a></li>

@@ -41,5 +41,9 @@ angular.module('WheelApp', ['ngRoute', 'ngResource'])
       templateUrl: 'views/user.html',
       controller: 'userController'
     })
+    .when('/leaderboard', {
+      templateUrl: 'views/leaderboard.html',
+      controller: 'boardController'
+    })
   });
 
