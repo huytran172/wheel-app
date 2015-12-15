@@ -15,7 +15,10 @@ mongoose.connect('mongodb://localhost/test');
 var app = express();
 app.use(logger('dev'));
 app.use(session({
-  secret: 'super secret'
+  cookieName: 'session',
+  secret: 'random_string_goes_here',
+  duration: 30 * 60 * 1000,
+  activeDuration: 5 * 60 * 1000
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

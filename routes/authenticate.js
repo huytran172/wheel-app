@@ -4,6 +4,8 @@ var router = express.Router();
 module.exports = function (passport) {
   //sends successful login state back to angular
   router.get('/success', function(req, res){
+    console.log("Hello success");
+    console.log(req.user);
     res.send({state: 'success', user: req.user ? req.user : null});
   });
   //sends failure login state back to angular
@@ -22,7 +24,7 @@ module.exports = function (passport) {
   }));
   //log out
   router.get('/signout', function(req, res) {
-    req.logout();
+    //req.logout();
     //res.redirect('/');
   });
   return router;
