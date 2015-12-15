@@ -2,11 +2,18 @@ angular.module('WheelApp')
   .controller('mainController', function ($scope, $http, $location) {
 
     // Can you get the current question??
-    $scope.currentQuestion = {
-      question: "What is my name",
-      answer: "huy",
-      answeredBy: ""
-    };
+    //$scope.currentQuestion = {
+    //  question: "What is my name",
+    //  answer: "huy",
+    //  answeredBy: ""
+    //};
+
+    $http.get(
+      '/questions/question'
+    ).success(function (response) {
+      console.log(response);
+      $scope.currentQuestion = response;
+    });
     // -----------------------------------
 
     // Can you get all questions with empty string answeredBy property

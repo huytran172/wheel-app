@@ -1,8 +1,11 @@
 var mongoose = require('mongoose');
 var questionSchema = new mongoose.Schema({
-  answerAt: {type: Date, default: Date.now},
+  createdAt: {type: Date, default: Date.now},
+  answerAt: String,
+  createdBy: String,
   answerBy: String,
-  text: String
+  questionText: String,
+  answerText: String
 });
 var userSchema = new mongoose.Schema({
   username: String,

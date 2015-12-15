@@ -8,8 +8,9 @@ var session = require('express-session');
 var passport = require('passport');
 //initialize mongoose schemas
 require('./models/models');
-//var api = require('./routes/api');
+var questions = require('./routes/questions');
 var authenticate = require('./routes/authenticate')(passport);
+var leaderboard = require('./routes/leaderboard');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
 var app = express();
@@ -31,6 +32,8 @@ app.use(passport.session());
 var initPassport = require('./passport-init');
 initPassport(passport);
 app.use('/auth', authenticate);
+app.use('/leaderboard', leaderboard);
+app.use('/questions', questions);
 app.get('/questions/:id', function (req, res) {
   res.json([
     {question: "1+1", answer: "2", answeredBy: req.params.id}
