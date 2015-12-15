@@ -1,10 +1,10 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
-	// crypto = require('crypto'), 
-	passportLocalMongoose = require('passport-local-mongoose');
+	crypto = require('crypto');
+	// passportLocalMongoose = require('passport-local-mongoose');
 
 var UserSchema = new Schema({
-	userId: String,
+	// userId: String,
     username: String,
     password: String
 });
@@ -17,7 +17,7 @@ UserSchema.pre('save',
 			var md5 = crypto.createHash('md5');
 			this.password = md5.update(this.password).digest('hex');
 		}
-		nest();
+		next();
 	})
 
 UserSchema.methods.authenticate = function(password){
@@ -32,6 +32,6 @@ UserSchema.statics.findUserName = function(username){
 	return null;
 }
 
-UserSchema.plugin(passportLocalMongoose);
+// UserSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model('User', UserSchema);

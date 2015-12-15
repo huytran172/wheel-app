@@ -1,4 +1,4 @@
-module.export = function(app){
+module.exports = function(app){
 	var index = require('../controllers/indexController');
-	app.get('/', index.renderer);
+	app.get('*', index.render);
 }
