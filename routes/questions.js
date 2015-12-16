@@ -53,7 +53,18 @@ router
   //     }
   //   )
   // });
-
+  // get all question with that id
+router.route('/question/:id')
+  .get(function (req, res) {
+    User.findOne({_id: req.params.id}, function (err, currentUser) {
+      if (err) {
+        res.send(err);
+      }
+      Question.find({answerBy: currentUser.username}, function (err, data) {
+        res.json(data);
+      })
+    })
+  });
 router.route('/feed')
   .get(function (req, res) {
     Question.find({answerBy: {$ne: ""}}, function (err, data) {
