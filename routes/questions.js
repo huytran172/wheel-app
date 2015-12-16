@@ -29,7 +29,7 @@ router
 
       res.json(question);
     });
-// });
+});
   // .put(function (req, res) {
   //   Question.update(
   //     {_id: req.body._id},
