@@ -1,17 +1,56 @@
-/**
- * mainController.js
- * GET request to /colors
- * Expected returning data: {color1, color2, ...}
- */
 angular.module('WheelApp')
-  .controller('mainController', function ($scope, $http) {
-    $scope.listColors = ["red", "blue", "yellow"];
-    //$http({
-    //  method: 'GET',
-    //  url: '/colors'
-    //}).then(function successCallback(response) {
-    //  $scope.listColors = response;
-    //}, function errorCallback() {
-    //  console.log ('some errors happened');
-    //});
+  .controller('mainController', function ($rootScope, $scope, $http, $location) {
+    function getCurrentQuestion() {
+      $http.get(
+        '/api/question'
+      ).success(function (response) {
+        console.log(response);
+        $scope.currentQuestion = response;
+      });
+    }
+    function getFeed() {
+      $http.get('/api/feed').success(function (response) {
+        $scope.feeds = response;
+      });
+    }
+    getCurrentQuestion();
+    // -----------------------------------
+
+
+    // Get the feed
+    getFeed();
+
+    // -----------------------------------------------------------------
+
+    // Submit answer
+    $scope.userAnswer = "";
+    $scope.message = "";
+    $scope.submitAnswer = function () {
+      if ($scope.currentQuestion.answerText.toLowerCase() == $scope.userAnswer.toLowerCase()) {
+        $scope.message = "Answer is correct. You earn ten points";
+        $scope.getMessageClass = function () {
+          return 'alert-success';
+        };
+        // Post back to server
+
+        $http.put(
+          '/questions/question',
+          {
+            _id: $scope.currentQuestion._id,
+            username: $rootScope.currentUser
+          }
+        ).success(function (response) {
+          console.log(response);
+          getCurrentQuestion();
+          getFeed();
+        });
+      }
+      else {
+        $scope.message = "Wrong answer. Please try again";
+        $scope.getMessageClass = function () {
+          return 'alert-danger';
+        }
+      }
+    };
+    // ----------------------------------------------------------------
   });

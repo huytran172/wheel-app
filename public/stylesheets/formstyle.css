@@ -1,7 +1,17 @@
-.form-login {
+.form, .alert, .lead {
   margin: 10% auto;
   max-width: 400px;
 }
 .form-control {
   margin-bottom: 20px;
+}
+.small {
+  font-size: 1em;
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+  background-color: #AAB3B9;
+}
+
+.profile-row {
+  margin-top: 40px;
 }

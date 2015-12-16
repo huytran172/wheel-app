@@ -1,1 +1,27 @@
-<p>User page</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4"><h1>{{ currentUser | LabelCase }}</h1></div>
+    <div class="col-sm-8"><h3>Recently solved questions</h3></div>
+  </div>
+  <div class="row profile-row">
+    <div class="col-sm-3">
+      <ul class="list-group">
+        <li class="list-group-item text-muted">Profile</li>
+        <li class="list-group-item text-right"><span class="pull-left"><strong>Name</strong></span>{{ currentUser | LabelCase }}</li>
+        <li class="list-group-item text-right"><span class="pull-left"><strong>Points</strong></span>{{ currentPoint }}</li>
+        <li class="list-group-item text-right"><span class="pull-left"><strong>Recent wins</strong></span>Time stamp of the last question</li>
+      </ul>
+    </div>
+    <div class="col-sm-9">
+      <div class="well" ng-repeat="item in questionsList">
+        <h3>
+          <strong>{{ item.question }}</strong>
+                <span class="pull-right">
+                  <button class="btn btn-default">Show Answer</button>
+                </span>
+        </h3>
+        <span class="lead">{{ item.answer }}</span>
+      </div>
+    </div>
+  </div>
+</div>
