@@ -1,9 +1,7 @@
 var socket = io();
 
 angular.module('WheelApp')
-  .constant('FeedPageSize', 3)
-  .constant('FeedPageActive', 'btn-primary')
-  .controller('mainController', function (FeedPageSize, FeedPageActive, $rootScope, $scope, $http, $location, $timeout) {
+.controller('mainController', function ($rootScope, $scope, $http, $location) {
 
   socket.on('time', function(data){
     console.log(data.time);
@@ -17,6 +15,8 @@ angular.module('WheelApp')
       ).success(function (response) {
         console.log(response);
         $scope.currentQuestion = response;
+        // questionText
+        // answerText
       });
     }
 
@@ -65,27 +65,17 @@ angular.module('WheelApp')
             answerText: $scope.currentQuestion.answer,
             username: $rootScope.currentUser.username
           }
-        ).success(function (response) {
-          console.log(response);
-          getCurrentQuestion();
-          getFeed();
-        });
-      }
-      else {
-        $timeout(function () { $scope.message = ""; }, 3000);
-        $scope.message = "Wrong answer. Please try again";
-        $scope.getMessageClass = function () {
-          return 'alert-danger';
+          ).success(function (response) {
+            console.log(response);
+            getCurrentQuestion();
+            getFeed();
+          });
         }
-      }
-    };
-
-    $scope.selectedPage = 1;
-    $scope.pageSize = FeedPageSize;
-    $scope.selectPage = function (newPage) {
-      $scope.selectedPage = newPage;
-    }
-    $scope.getPageClass = function (page) {
-        return $scope.selectedPage == page ? FeedPageActive : "";
-    }
-  });
+        else {
+          $scope.message = "Wrong answer. Please try again";
+          $scope.getMessageClass = function () {
+            return 'alert-danger';
+          }
+        }
+      };
+    });

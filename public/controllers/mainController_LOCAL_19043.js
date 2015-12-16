@@ -5,21 +5,20 @@ angular.module('WheelApp')
   .constant('FeedPageActive', 'btn-primary')
   .controller('mainController', function (FeedPageSize, FeedPageActive, $rootScope, $scope, $http, $location, $timeout) {
 
-  socket.on('time', function(data){
-    console.log(data.time);
-    $scope.theTime = data.time;
-    $scope.$apply();
-  });
+    socket.on('time', function(data){
+      console.log(data.time);
+      $scope.theTime = data.time;
+      $scope.$apply();
+    });
 
-  function getCurrentQuestion() {
-    $http.get(
-      '/api/question'
+    function getCurrentQuestion() {
+      $http.get(
+        '/api/question'
       ).success(function (response) {
         console.log(response);
         $scope.currentQuestion = response;
       });
     }
-
     function getFeed() {
       $http.get('/questions/feed').success(function (response) {
         $scope.feeds = response;
@@ -43,26 +42,19 @@ angular.module('WheelApp')
     // Submit answer
     $scope.userAnswer = "";
     $scope.message = "";
-
-    function remove_tags(html) {
-     var tmp = document.createElement("DIV");
-     tmp.innerHTML = html; 
-     return tmp.textContent||tmp.innerText; 
-   };
-
-   $scope.submitAnswer = function () {
-    if (remove_tags($scope.currentQuestion.answer.toLowerCase()) == $scope.userAnswer.toLowerCase()) {
-      $scope.message = "Answer is correct. You earn ten points";
-      $scope.getMessageClass = function () {
-        return 'alert-success';
-      };
-        // Post back to server
+    $scope.submitAnswer = function () {
+      if ($scope.currentQuestion.answerText.toLowerCase() == $scope.userAnswer.toLowerCase()) {
+        $timeout(function () { $scope.message = ""; }, 3000);
+        $scope.message = "Answer is correct. You earn ten points";
+        $scope.getMessageClass = function () {
+          return 'alert-success';
+        };
 
         $http.post(
           '/questions/question',
           {
-            questionText: $scope.currentQuestion.question,
-            answerText: $scope.currentQuestion.answer,
+            questionText: $scope.currentQuestion.questionText,
+            answerText: $scope.currentQuestion.answerText,
             username: $rootScope.currentUser.username
           }
         ).success(function (response) {

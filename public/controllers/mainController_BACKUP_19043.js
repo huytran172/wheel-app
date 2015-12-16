@@ -1,9 +1,13 @@
 var socket = io();
 
 angular.module('WheelApp')
+<<<<<<< HEAD
   .constant('FeedPageSize', 3)
   .constant('FeedPageActive', 'btn-primary')
   .controller('mainController', function (FeedPageSize, FeedPageActive, $rootScope, $scope, $http, $location, $timeout) {
+=======
+.controller('mainController', function ($rootScope, $scope, $http, $location) {
+>>>>>>> 4a6b637c7943b5e3804f7da4c6d9e8a6a471914f
 
   socket.on('time', function(data){
     console.log(data.time);
@@ -43,6 +47,15 @@ angular.module('WheelApp')
     // Submit answer
     $scope.userAnswer = "";
     $scope.message = "";
+<<<<<<< HEAD
+    $scope.submitAnswer = function () {
+      if ($scope.currentQuestion.answerText.toLowerCase() == $scope.userAnswer.toLowerCase()) {
+        $timeout(function () { $scope.message = ""; }, 3000);
+        $scope.message = "Answer is correct. You earn ten points";
+        $scope.getMessageClass = function () {
+          return 'alert-success';
+        };
+=======
 
     function remove_tags(html) {
      var tmp = document.createElement("DIV");
@@ -57,6 +70,7 @@ angular.module('WheelApp')
         return 'alert-success';
       };
         // Post back to server
+>>>>>>> 4a6b637c7943b5e3804f7da4c6d9e8a6a471914f
 
         $http.post(
           '/questions/question',
@@ -65,6 +79,7 @@ angular.module('WheelApp')
             answerText: $scope.currentQuestion.answer,
             username: $rootScope.currentUser.username
           }
+<<<<<<< HEAD
         ).success(function (response) {
           console.log(response);
           getCurrentQuestion();
@@ -89,3 +104,19 @@ angular.module('WheelApp')
         return $scope.selectedPage == page ? FeedPageActive : "";
     }
   });
+=======
+          ).success(function (response) {
+            console.log(response);
+            getCurrentQuestion();
+            getFeed();
+          });
+        }
+        else {
+          $scope.message = "Wrong answer. Please try again";
+          $scope.getMessageClass = function () {
+            return 'alert-danger';
+          }
+        }
+      };
+    });
+>>>>>>> 4a6b637c7943b5e3804f7da4c6d9e8a6a471914f
