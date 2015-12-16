@@ -15,6 +15,7 @@ router
      res.json(data)
     })
   })
+
   .post(function (req, res) {
     var question = new Question();
     question.answerBy   = '';
@@ -64,4 +65,5 @@ router.route('/feed')
       res.json(data);
     })
   });
+
 module.exports = router;

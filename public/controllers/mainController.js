@@ -2,14 +2,14 @@ angular.module('WheelApp')
   .controller('mainController', function ($rootScope, $scope, $http, $location) {
     function getCurrentQuestion() {
       $http.get(
-        '/questions/question'
+        '/api/question'
       ).success(function (response) {
         console.log(response);
         $scope.currentQuestion = response;
       });
     }
     function getFeed() {
-      $http.get('/questions/feed').success(function (response) {
+      $http.get('/api/feed').success(function (response) {
         $scope.feeds = response;
       });
     }

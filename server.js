@@ -11,6 +11,7 @@ require('./models/models');
 var questions = require('./routes/questions');
 var authenticate = require('./routes/authenticate')(passport);
 var leaderboard = require('./routes/leaderboard');
+var api = require('./routes/api');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
 var app = express();
@@ -34,11 +35,25 @@ initPassport(passport);
 app.use('/auth', authenticate);
 app.use('/leaderboard', leaderboard);
 app.use('/questions', questions);
+app.use('/api/question', api);
 app.get('/questions/:id', function (req, res) {
   res.json([
     {question: "1+1", answer: "2", answeredBy: req.params.id}
   ]);
 });
+
+// app.get('/api/question', function (req, res){
+// 	console.log('Got a question for ya');
+// 	res.send({questionText:'AAAA?'})
+// });
+
+
+// app.get('/api/feed', function (req, res){
+	// console.log('Got a question for ya');
+	// res.send({question:'AAAA?'})
+	// res.send("BBBB");
+	// console.log(req);
+// });
 
 app.get('*', function (req, res) {
 	res.sendfile('public/index.html');
