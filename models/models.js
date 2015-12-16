@@ -1,8 +1,6 @@
 var mongoose = require('mongoose');
 var questionSchema = new mongoose.Schema({
-  createdAt: {type: Date, default: Date.now},
   answerAt: String,
-  createdBy: String,
   answerBy: String,
   questionText: String,
   answerText: String

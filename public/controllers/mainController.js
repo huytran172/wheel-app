@@ -6,10 +6,12 @@ angular.module('WheelApp')
       ).success(function (response) {
         console.log(response);
         $scope.currentQuestion = response;
+        // questionText
+        // answerText
       });
     }
     function getFeed() {
-      $http.get('/api/feed').success(function (response) {
+      $http.get('/questions/feed').success(function (response) {
         $scope.feeds = response;
       });
     }
@@ -33,11 +35,12 @@ angular.module('WheelApp')
         };
         // Post back to server
 
-        $http.put(
+        $http.post(
           '/questions/question',
           {
-            _id: $scope.currentQuestion._id,
-            username: $rootScope.currentUser
+            questionText: $scope.currentQuestion.questionText,
+            answerText: $scope.currentQuestion.answerText,
+            username: $rootScope.currentUser.username
           }
         ).success(function (response) {
           console.log(response);

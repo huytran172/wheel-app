@@ -8,9 +8,9 @@
       var socket = io();
       // $('#counter').val();
       socket.on('time', function(data){
-        console.log(data.time);
+        // console.log(data.time);
       })
-    </script>>
+    </script>
     <!-- END TEST TIMER STUFF -->
     <input ng-show="authenticated" ng-model="userAnswer" type="text" class="form-control" placeholder="Type your answer here">
     <button ng-show="authenticated" class="btn btn-primary pull-right" ng-click="submitAnswer()">Answer</button>
