@@ -74,5 +74,14 @@ router.route('/feed')
       res.json(data);
     })
   });
+  router.route('/userRecord')
+    .post(function (req, res) {
+      User.findOne({_id: req.body._id}, function (err, data) {
+        if (err) {
+          res.send(err);
+        }
+        res.json(data);
+      })
+    });
 
 module.exports = router;
