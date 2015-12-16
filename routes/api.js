@@ -6,7 +6,9 @@ module.exports = function(app) {
     console.log('GOT A QUESTION FOR YA');
     console.log(main.questionOTD());
     var ques = {};
-    ques.questionText = main.questionOTD();
+    var apiRes = main.questionOTD();
+    ques.questionText = apiRes.question;
+    ques.answerText = apiRes.answer;
     res.send(ques);
   });
 };

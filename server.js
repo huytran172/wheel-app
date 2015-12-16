@@ -51,7 +51,7 @@ require('./routes/api')(app);
 function getNewQuestionFromAPI(){
   request('http://www.jservice.io/api/random', function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      q = JSON.parse(body)[0].question;
+      q = JSON.parse(body)[0];
       console.log("found a question: " + q);
     }
     else q = null;
