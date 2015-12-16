@@ -1,7 +1,16 @@
-.form-login {
+.form, .alert, .lead {
   margin: 10% auto;
   max-width: 400px;
 }
+.leaderboard {
+  max-width: 500px;
+}
 .form-control {
   margin-bottom: 20px;
+}
+.small {
+  font-size: 1em;
+}
+.profile-row {
+  margin-top: 40px;
 }

@@ -1,112 +1,49 @@
-var express = require('express'),
-	logger = require('morgan'),
-	cookieParser = require('cookie-parser'),
-	bodyParser = require('body-parser'),
-	methodOverride = require('method-override'),
-	session = require('express-session'),
-	passport = require('passport'),
-	LocalStrategy = require('passport-local'),
-	MongooseStrategy = require('passport-local-mongoose'),
-	// TwitterStrategy = require('passport-twitter'),
-	// GoogleStrategy = require('passport-google'),
-	// FacebookStrategy = require('passport-facebook'),
-app = express();
-
-var 
-
-//===============PASSPORT===============
-
-//Passport stuff here
-
-//===============EXPRESS================
-// Configure Express
-app.use(logger('combined'));
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: false }));
+var express = require('express');
+var path = require('path');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var session = require('express-session');
+var passport = require('passport');
+//initialize mongoose schemas
+require('./models/models');
+var questions = require('./routes/questions');
+var authenticate = require('./routes/authenticate')(passport);
+var leaderboard = require('./routes/leaderboard');
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/test');
+var app = express();
+app.use(logger('dev'));
+app.use(session({
+  cookieName: 'session',
+  secret: 'random_string_goes_here',
+  duration: 30 * 60 * 1000,
+  activeDuration: 5 * 60 * 1000
+}));
 app.use(bodyParser.json());
-app.use(methodOverride('X-HTTP-Method-Override'));
-app.use(session({secret: 'supernova', saveUninitialized: true, resave: true}));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Session-persisted message middleware
-app.use(function(req, res, next){
-	var err = req.session.error,
-	msg = req.session.notice,
-	success = req.session.success;
-
-	delete req.session.error;
-	delete req.session.success;
-	delete req.session.notice;
-
-	if (err) res.locals.error = err;
-	if (msg) res.locals.notice = msg;
-	if (success) res.locals.success = success;
-
-	next();
+//// Initialize Passport
+var initPassport = require('./passport-init');
+initPassport(passport);
+app.use('/auth', authenticate);
+app.use('/leaderboard', leaderboard);
+app.use('/questions', questions);
+app.get('/questions/:id', function (req, res) {
+  res.json([
+    {question: "1+1", answer: "2", answeredBy: req.params.id}
+  ]);
 });
-
-//============ROUTES===============
-app.use(bodyParser());
-app.use(express.static('./public'))
 
 app.get('*', function (req, res) {
 	res.sendfile('public/index.html');
-	// res.render('home', {user: req.user});
 });
-
-app.post('/login', passport.authenticate('local', { successRedirect: '/',
-	failureRedirect: '/login' }));
-
-//displays signup page
-app.get('/auth/signup', function(req, res){
-	res.render('signin');
-});
-
-//sends the request through our local signup strategy, and if successful takes user to homepage, otherwise returns then to signin page
-app.post('/local-reg', passport.authenticate('local-signup', {
-	successRedirect: '/',
-	failureRedirect: '/signin'
-})
-);
-
-// auth/login
-// - POST: Example data {username: 'huytran', password: '123'}
-// - response {state: "success", {username: name, userID: id}
-//         or {state: "error"  , error_message: error}
-
-//sends the request through our local login/signin strategy, and if successful takes user to homepage, otherwise returns then to signin page
-app.post('/auth/login',
-	passport.authenticate('local-signin', { 
-		successRedirect: '/',
-		failureRedirect: '/auth/login'
-	}),
-	function(req, res){
-
-	}
-	);
-
-//logs user out of site, deleting them from the session, and returns to homepage
-app.get('/logout', function(req, res){
-	var name = req.user.username;
-	console.log("LOGGIN OUT " + req.user.username)
-	req.logout();
-	res.redirect('/');
-	req.session.notice = "You have successfully been logged out " + name + "!";
-});
-
-
-//==============PORT==================
+////==============PORT==================
 var port = process.env.PORT || 3000; //select your port or let it pull from your .env file
 app.listen(port);
 console.log('Server is running on port ' + port);
-
-
-
-//-----------------------------------
-//index.js/
-
-
-//We will be creating these two files shortly
-// var config = require('./config.js'), //config file contains all tokens and other private info
-//    funct = require('./functions.js'); //funct file contains our helper functions for our Passport and database work

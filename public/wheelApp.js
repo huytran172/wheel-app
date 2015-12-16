@@ -1,12 +1,14 @@
 angular.module('WheelApp', ['ngRoute', 'ngResource'])
+  .constant('FeedListActiveClass', 'btn-primary')
+  .constant('FeedListCount', 3)
   // Initialization and log out
   .run(function ($rootScope, $http, $location) {
     // No user logged in
     $rootScope.authenticated = false;
     $rootScope.currentUser = "";
-    // reset state of the app
+     //reset state of the app
     $rootScope.signout = function(){
-      $http.get('auth/signout');
+      //$http.get('auth/signout');
       $rootScope.authenticated = false;
       $rootScope.currentUser= '';
 
@@ -41,5 +43,10 @@ angular.module('WheelApp', ['ngRoute', 'ngResource'])
       templateUrl: 'views/user.html',
       controller: 'userController'
     })
+    .when('/leaderboard', {
+      templateUrl: 'views/leaderboard.html',
+      controller: 'boardController'
+    })
+    .otherwise({ redirectTo: '/' });
   });
 
