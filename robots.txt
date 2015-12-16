@@ -3,4 +3,5 @@ Disallow: /my_shiny_metal_ass
 
 User-Agent: *
 Disallow: /auth/*
+Disallow: /api/*
 Allow: /
