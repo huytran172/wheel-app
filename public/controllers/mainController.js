@@ -6,6 +6,7 @@ angular.module('WheelApp')
     socket.on('time', function(data){
       console.log(data.time);
       $scope.theTime = data.time;
+      $scope.$apply();
     });
 
     function getCurrentQuestion() {

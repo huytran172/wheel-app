@@ -1,8 +1,7 @@
 <div class="container">
   <div class="form">
     <p>
-      Hello
-      <p>{{ theTime }}</p>
+      Hello {{ theTime }}
     </p>
     <h3 ng-show="currentQuestion.questionText != null" class="lead text-center">{{ currentQuestion.questionText }}</h3>
     <h3 ng-hide="currentQuestion.questionText != null" class="lead text-center">No more question. Update soon.</h3>
