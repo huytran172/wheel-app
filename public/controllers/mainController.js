@@ -26,7 +26,7 @@ angular.module('WheelApp')
     $scope.userAnswer = "";
     $scope.message = "";
     $scope.submitAnswer = function () {
-      if ($scope.currentQuestion.answerText.toLowerCase() == $scope.userAnswer.toLowerCase()) {
+      if ($scope.currentQuestion != null && $scope.currentQuestion.answerText.toLowerCase() == $scope.userAnswer.toLowerCase()) {
         $scope.message = "Answer is correct. You earn ten points";
         $scope.getMessageClass = function () {
           return 'alert-success';

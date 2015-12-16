@@ -9,18 +9,19 @@
         <li class="list-group-item text-muted">Profile</li>
         <li class="list-group-item text-right"><span class="pull-left"><strong>Name</strong></span>{{ currentUser.username | LabelCase }}</li>
         <li class="list-group-item text-right"><span class="pull-left"><strong>Points</strong></span>{{ points }}</li>
-        <li class="list-group-item text-right"><span class="pull-left"><strong>Recent wins</strong></span>{{ mostRecentWin | date:"MM/dd/yyyy 'at' h:mma"  }}</li>
+        <li class="list-group-item text-right"><span class="pull-left"><strong>Recent win</strong></span>{{ mostRecentWin | date:"MM/dd/yyyy 'at' h:mma"  }}</li>
       </ul>
     </div>
     <div class="col-sm-9">
-      <div class="well" ng-repeat="item in questionsList">
+      <div class="well" ng-repeat="item in questionsList" ng-init="clicked = false">
         <h3>
           <strong>{{ item.questionText }}</strong>
-                <span class="pull-right">
-                  <button class="btn btn-default">Show Answer</button>
-                </span>
+            <span class="pull-right">
+              <button ng-show="clicked" class="btn btn-default" ng-click=" clicked = !clicked; ">Hide Answer</button>
+              <button ng-hide="clicked" class="btn btn-default" ng-click=" clicked = !clicked; ">Show Answer</button>
+            </span>
         </h3>
-        <span class="lead">{{ item.answerText }}</span>
+        <span ng-show="clicked" class="lead">{{ item.answerText }}</span>
       </div>
     </div>
   </div>
