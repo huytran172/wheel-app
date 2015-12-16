@@ -56,4 +56,10 @@ angular.module('WheelApp')
       }
     };
     // ----------------------------------------------------------------
+    var socket = io();
+    // $('#counter').val();
+    socket.on('time', function(data){
+      console.log(data.time);
+      $scope.time = data.time.val;
+    })
   });
