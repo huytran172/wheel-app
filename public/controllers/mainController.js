@@ -1,17 +1,17 @@
 var socket = io();
 
 angular.module('WheelApp')
-  .controller('mainController', function ($rootScope, $scope, $http, $location) {
+.controller('mainController', function ($rootScope, $scope, $http, $location) {
 
-    socket.on('time', function(data){
-      console.log(data.time);
-      $scope.theTime = data.time;
-      $scope.$apply();
-    });
+  socket.on('time', function(data){
+    console.log(data.time);
+    $scope.theTime = data.time;
+    $scope.$apply();
+  });
 
-    function getCurrentQuestion() {
-      $http.get(
-        '/api/question'
+  function getCurrentQuestion() {
+    $http.get(
+      '/api/question'
       ).success(function (response) {
         console.log(response);
         $scope.currentQuestion = response;
@@ -19,6 +19,7 @@ angular.module('WheelApp')
         // answerText
       });
     }
+
     function getFeed() {
       $http.get('/questions/feed').success(function (response) {
         $scope.feeds = response;
@@ -42,32 +43,39 @@ angular.module('WheelApp')
     // Submit answer
     $scope.userAnswer = "";
     $scope.message = "";
-    $scope.submitAnswer = function () {
-      if ($scope.currentQuestion.answerText.toLowerCase() == $scope.userAnswer.toLowerCase()) {
-        $scope.message = "Answer is correct. You earn ten points";
-        $scope.getMessageClass = function () {
-          return 'alert-success';
-        };
+
+    function remove_tags(html) {
+     var tmp = document.createElement("DIV");
+     tmp.innerHTML = html; 
+     return tmp.textContent||tmp.innerText; 
+   };
+
+   $scope.submitAnswer = function () {
+    if (remove_tags($scope.currentQuestion.answer.toLowerCase()) == $scope.userAnswer.toLowerCase()) {
+      $scope.message = "Answer is correct. You earn ten points";
+      $scope.getMessageClass = function () {
+        return 'alert-success';
+      };
         // Post back to server
 
         $http.post(
           '/questions/question',
           {
-            questionText: $scope.currentQuestion.questionText,
-            answerText: $scope.currentQuestion.answerText,
+            questionText: $scope.currentQuestion.question,
+            answerText: $scope.currentQuestion.answer,
             username: $rootScope.currentUser.username
           }
-        ).success(function (response) {
-          console.log(response);
-          getCurrentQuestion();
-          getFeed();
-        });
-      }
-      else {
-        $scope.message = "Wrong answer. Please try again";
-        $scope.getMessageClass = function () {
-          return 'alert-danger';
+          ).success(function (response) {
+            console.log(response);
+            getCurrentQuestion();
+            getFeed();
+          });
         }
-      }
-    };
-  });
+        else {
+          $scope.message = "Wrong answer. Please try again";
+          $scope.getMessageClass = function () {
+            return 'alert-danger';
+          }
+        }
+      };
+    });
