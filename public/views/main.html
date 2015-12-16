@@ -14,7 +14,7 @@
     </p>
   </div>
   <div id="feed" class="col-sm-offset-2 col-md-8">
-    <h5>Answers feed</h5>
+    <h5 ng-show="angular.isArray(feeds)">Answers feed</h5>
     <div class="well well-sm" ng-repeat="item in feeds | orderBy: item.answerAt : true">
       <p>Question: {{ item.questionText }}</p>
       <small>Answered by: <strong>{{ item.answerBy }}</strong></small>

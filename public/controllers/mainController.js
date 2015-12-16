@@ -37,7 +37,7 @@ angular.module('WheelApp')
           '/questions/question',
           {
             _id: $scope.currentQuestion._id,
-            username: $rootScope.currentUser
+            username: $rootScope.currentUser.username
           }
         ).success(function (response) {
           console.log(response);
