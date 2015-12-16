@@ -6,14 +6,15 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var passport = require('passport');
+var request = require('request');
 //initialize mongoose schemas
 require('./models/models');
 var questions = require('./routes/questions');
 var authenticate = require('./routes/authenticate')(passport);
 var leaderboard = require('./routes/leaderboard');
-var api = require('./routes/api');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
+var Stopwatch = require('./models/stopwatch');
 var app = express();
 app.use(logger('dev'));
 app.use(session({
@@ -22,6 +23,7 @@ app.use(session({
   duration: 30 * 60 * 1000,
   activeDuration: 5 * 60 * 1000
 }));
+var q;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -35,30 +37,60 @@ initPassport(passport);
 app.use('/auth', authenticate);
 app.use('/leaderboard', leaderboard);
 app.use('/questions', questions);
-app.use('/api/question', api);
 app.get('/questions/:id', function (req, res) {
   res.json([
     {question: "1+1", answer: "2", answeredBy: req.params.id}
   ]);
 });
 
-// app.get('/api/question', function (req, res){
-// 	console.log('Got a question for ya');
-// 	res.send({questionText:'AAAA?'})
-// });
+require('./routes/api')(app);
 
+//Get question of the day/hour/minute
+//Returns the question string. 
+//Super spaghetti code.
+function getNewQuestionFromAPI(){
+  request('http://www.jservice.io/api/random', function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      q = JSON.parse(body)[0].question;
+      console.log("found a question: " + q);
+    }
+    else q = null;
+  });
+  return q;
+};
 
-// app.get('/api/feed', function (req, res){
-	// console.log('Got a question for ya');
-	// res.send({question:'AAAA?'})
-	// res.send("BBBB");
-	// console.log(req);
-// });
+//TIMER TIMER TIMER TIMER STUFF
+//---------STOPWATCH-------------
+var stopwatch = new Stopwatch();  
+
+stopwatch.on('start:stopwatch', function() {
+  getNewQuestionFromAPI();
+  module.exports.questionOTD = function(){
+    return q;
+  }
+});
+
+stopwatch.on('tick:stopwatch', function(time) {  
+  io.sockets.emit('time', { time: time });
+  // console.log(q);
+});
+
+stopwatch.on('reset:stopwatch', function(time) {
+  //Get new question, set new question 
+  getNewQuestionFromAPI(); 
+  io.sockets.emit('load'); //Maybe replace this with broadcast.
+  io.sockets.emit('time', { time: time });
+});
+
+stopwatch.start();
+//-----------SOCKET---------------
+
 
 app.get('*', function (req, res) {
 	res.sendfile('public/index.html');
 });
 ////==============PORT==================
 var port = process.env.PORT || 3000; //select your port or let it pull from your .env file
-app.listen(port);
+var server = app.listen(port);
+var io = require('socket.io').listen(server);
 console.log('Server is running on port ' + port);

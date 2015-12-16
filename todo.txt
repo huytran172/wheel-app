@@ -5,7 +5,7 @@ npm install
 //use bower? grunt?
 //Travis-ci for unit testing
 
-
+Add frontend for stopwatch
 
 Database (MongoDB):
 1.User
