@@ -1,4 +1,5 @@
 var socket = io();
+var lastQ = "";
 
 angular.module('WheelApp')
   .constant('FeedPageSize', 3)
@@ -15,16 +16,17 @@ angular.module('WheelApp')
     $http.get(
       '/api/question'
       ).success(function (response) {
+        if (response == lastQ){
+          getCurrentQuestion();
+        }
         console.log(response);
         $scope.currentQuestion = response;
-        $scope.$apply();
       });
     }
 
     function getFeed() {
       $http.get('/questions/feed').success(function (response) {
         $scope.feeds = response;
-        $scope.$apply();
       });
     }
 
@@ -32,7 +34,9 @@ angular.module('WheelApp')
 
     socket.on('load', function(){
       console.log('Yo we got a new question over here');
+      lastQ = $scope.currentQuestion;
       getCurrentQuestion();
+      $scope.$apply();
     });
     // -----------------------------------
 
