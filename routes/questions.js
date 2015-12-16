@@ -1,6 +1,7 @@
 var express = require('express'),
     mongoose = require('mongoose'),
     Question = mongoose.model('Question'),
+    User = mongoose.model('User'),
     router = express.Router();
 
 router
@@ -41,6 +42,11 @@ router
         multi: true
       },
       function (err, question) {
+        User.findOne({username: req.body.username}, function (err, user) {
+          user.points += 10;
+          user.save();
+        });
+
         if (err) {
           res.send(err);
         }
@@ -49,4 +55,13 @@ router
     )
   });
 
+router.route('/feed')
+  .get(function (req, res) {
+    Question.find({answerBy: {$ne: ""}}, function (err, data) {
+      if (err) {
+        res.send(err);
+      }
+      res.json(data);
+    })
+  });
 module.exports = router;

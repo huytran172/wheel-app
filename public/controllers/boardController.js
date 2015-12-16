@@ -4,5 +4,6 @@ angular.module('WheelApp')
       'leaderboard/users'
     ).success(function (response) {
       $scope.users = response;
+      console.log(response);
     });
   });
