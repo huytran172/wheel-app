@@ -1,18 +1,19 @@
 <div class="container">
   <div class="form">
     <p>
-      Hello {{ time }}
+      Hello
+      <p>{{ theTime }}</p>
     </p>
     <h3 ng-show="currentQuestion.questionText != null" class="lead text-center">{{ currentQuestion.questionText }}</h3>
     <h3 ng-hide="currentQuestion.questionText != null" class="lead text-center">No more question. Update soon.</h3>
     <!-- TEST TIMER STUFF -->
     <!-- <div id="counter"></div>> -->
     <script type="text/javascript">
-      var socket = io();
+      // var socket = io();
       // $('#counter').val();
-      socket.on('time', function(data){
+      // socket.on('time', function(data){
         // console.log(data.time);
-      })
+      // })
     </script>
     <!-- END TEST TIMER STUFF -->
     <input ng-show="authenticated" ng-model="userAnswer" type="text" class="form-control" placeholder="Type your answer here">

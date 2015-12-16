@@ -1,19 +1,35 @@
+var socket = io();
+
 angular.module('WheelApp')
   .controller('mainController', function ($rootScope, $scope, $http, $location) {
+
+    socket.on('time', function(data){
+      console.log(data.time);
+      $scope.theTime = data.time;
+    });
+
     function getCurrentQuestion() {
       $http.get(
         '/api/question'
       ).success(function (response) {
         console.log(response);
         $scope.currentQuestion = response;
+        // questionText
+        // answerText
       });
     }
     function getFeed() {
-      $http.get('/api/feed').success(function (response) {
+      $http.get('/questions/feed').success(function (response) {
         $scope.feeds = response;
       });
     }
+
     getCurrentQuestion();
+
+    socket.on('load', function(){
+      console.log('Yo we got a new question over here');
+      getCurrentQuestion();
+    });
     // -----------------------------------
 
 
@@ -33,11 +49,12 @@ angular.module('WheelApp')
         };
         // Post back to server
 
-        $http.put(
-          '/api/question',
+        $http.post(
+          '/questions/question',
           {
-            _id: $scope.currentQuestion._id,
-            username: $rootScope.currentUser
+            questionText: $scope.currentQuestion.questionText,
+            answerText: $scope.currentQuestion.answerText,
+            username: $rootScope.currentUser.username
           }
         ).success(function (response) {
           console.log(response);
@@ -52,5 +69,4 @@ angular.module('WheelApp')
         }
       }
     };
-    // ----------------------------------------------------------------
   });
