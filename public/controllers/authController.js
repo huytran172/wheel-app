@@ -4,7 +4,6 @@ angular.module('WheelApp')
     $scope.error_message = '';
 
     $scope.auth = function authenticate(url) {
-      console.log(url + " " + $scope.user + " ABBBBBBBBBBBBBBBBBBBBBBBB");
       $http.post(
         url,
         $scope.user
@@ -14,7 +13,6 @@ angular.module('WheelApp')
           if (data.user !== null) {
             if (data.state == "success") {
               $rootScope.authenticated = true;
-              console.log('bug');
               $rootScope.currentUser = response.user;
               $rootScope.currentPoint = response.user.points;
               $location.path('/');
@@ -29,10 +27,4 @@ angular.module('WheelApp')
           $scope.error_message = "This is weird";
         })
     }
-    //$scope.login = function () {
-    //  authenticate('/auth/login');
-    //};
-    //$scope.signup = function () {
-    //  authenticate('/auth/signup');
-    //};
   });
