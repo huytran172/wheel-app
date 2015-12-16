@@ -34,11 +34,6 @@ initPassport(passport);
 app.use('/auth', authenticate);
 app.use('/leaderboard', leaderboard);
 app.use('/questions', questions);
-app.get('/questions/:id', function (req, res) {
-  res.json([
-    {question: "1+1", answer: "2", answeredBy: req.params.id}
-  ]);
-});
 
 app.get('*', function (req, res) {
 	res.sendfile('public/index.html');
