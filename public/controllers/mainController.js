@@ -6,8 +6,6 @@ angular.module('WheelApp')
       ).success(function (response) {
         console.log(response);
         $scope.currentQuestion = response;
-        // questionText
-        // answerText
       });
     }
     function getFeed() {
