@@ -45,9 +45,9 @@ router
           if (err) {
             res.send(err);
           }
-          res.json(question);
+          res.json('Your answer is correct. You get 10 points.');
         }
-        else res.send('Question has been already answered');
+        else res.send('Question has already been answered. Sorry!');
       }
     )
   });
