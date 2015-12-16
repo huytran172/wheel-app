@@ -1,43 +1,40 @@
 var socket = io();
-var lastQ = "";
 
 angular.module('WheelApp')
   .constant('FeedPageSize', 3)
   .constant('FeedPageActive', 'btn-primary')
   .controller('mainController', function (FeedPageSize, FeedPageActive, $rootScope, $scope, $http, $location, $timeout) {
-
+  socket.on('load', function(){
+    console.log('Yo we got a new question over here');
+    getCurrentQuestion();
+    // $scope.$apply();
+  });
   socket.on('time', function(data){
     // console.log(data.time);
     $scope.theTime = data.time;
     $scope.$apply();
   });
-
   function getCurrentQuestion() {
     $http.get(
       '/api/question'
       ).success(function (response) {
-        if (response == lastQ){
+        if (!angular.isUndefined($scope.currentQuestion) && response.question == $scope.currentQuestion.question){
           getCurrentQuestion();
         }
         console.log(response);
         $scope.currentQuestion = response;
+      }).error(function (response) {
+        console.log(response);
       });
     }
-
     function getFeed() {
       $http.get('/questions/feed').success(function (response) {
         $scope.feeds = response;
       });
     }
-
     getCurrentQuestion();
 
-    socket.on('load', function(){
-      console.log('Yo we got a new question over here');
-      lastQ = $scope.currentQuestion;
-      getCurrentQuestion();
-      $scope.$apply();
-    });
+
     // -----------------------------------
 
 
@@ -52,8 +49,8 @@ angular.module('WheelApp')
 
     function remove_tags(html) {
      var tmp = document.createElement("DIV");
-     tmp.innerHTML = html; 
-     return tmp.textContent||tmp.innerText; 
+     tmp.innerHTML = html;
+     return tmp.textContent||tmp.innerText;
    };
 
    $scope.submitAnswer = function () {
