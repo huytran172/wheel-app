@@ -17,7 +17,7 @@ angular.module('WheelApp')
               console.log('bug');
               $rootScope.currentUser = response.user;
               $rootScope.currentPoint = response.user.points;
-              $location.path('/user');
+              $location.path('/');
             }
           }
           else {
