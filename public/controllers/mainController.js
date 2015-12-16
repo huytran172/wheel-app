@@ -1,5 +1,5 @@
 angular.module('WheelApp')
-  .controller('mainController', function ($rootScope, $scope, $http, $location) {
+  .controller('mainController', function ($rootScope, $scope, $http, FeedListActiveClass, FeedListCount) {
     function getCurrentQuestion() {
       $http.get(
         '/api/question'
@@ -26,8 +26,7 @@ angular.module('WheelApp')
     $scope.userAnswer = "";
     $scope.message = "";
     $scope.submitAnswer = function () {
-      if ($scope.currentQuestion.answerText.toLowerCase() == $scope.userAnswer.toLowerCase()) {
-        $scope.message = "Answer is correct. You earn ten points";
+      if ($scope.currentQuestion != null && $scope.currentQuestion.answerText.toLowerCase() == $scope.userAnswer.toLowerCase()) {
         $scope.getMessageClass = function () {
           return 'alert-success';
         };
@@ -37,10 +36,10 @@ angular.module('WheelApp')
           '/questions/question',
           {
             _id: $scope.currentQuestion._id,
-            username: $rootScope.currentUser
+            username: $rootScope.currentUser.username
           }
         ).success(function (response) {
-          console.log(response);
+          $scope.message = response;
           getCurrentQuestion();
           getFeed();
         });
@@ -53,4 +52,13 @@ angular.module('WheelApp')
       }
     };
     // ----------------------------------------------------------------
+
+    $scope.selectedPage = 1;
+    $scope.pageSize = FeedListCount;
+    $scope.selectPage = function (newPage) {
+      $scope.selectedPage = newPage;
+    };
+    $scope.getPageClass = function (page) {
+      return $scope.selectedPage == page ? FeedListActiveClass : "";
+    }
   });

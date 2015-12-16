@@ -29,9 +29,10 @@
     </div>
     <div>
       <ul class="nav navbar-nav pull-right">
-        <li ng-hide="authenticated"><a href="#/login">Log In</a></li>
+        <li ng-class="active" ng-hide="authenticated"><a href="#/login">Log In</a></li>
         <li ng-hide="authenticated"><a href="#/signup">Sign Up</a></li>
-        <li ng-show="authenticated" ng-click="redirectToUserPage()"><a href="">Log in as <span style="color: #AA22FF">{{ currentUser }}</span></a></li>
+        <li ng-show="authenticated"><a href="#/">Home</a></li>
+        <li ng-show="authenticated" ng-click="redirectToUserPage()"><a href="">Log in as <span style="color: #AA22FF">{{ currentUser.username }}</span></a></li>
         <li ng-show="authenticated" ng-click="signout()"><a href="">Sign Out</a></li>
         <li><a href="#/leaderboard">Leaderboard</a></li>
         <li><a href="#/about">About</a></li>
@@ -40,10 +41,16 @@
   </div>
 </nav>
 <main>
-  <div class="row">
+  <div">
     <div class="col-sm-12" ng-view>
     </div>
   </div>
 </main>
 </body>
+<script>
+  $(".nav li a").on("click", function(){
+    $(".nav").find(".active").removeClass("active");
+    $(this).parent().addClass("active");
+  });
+</script>
 </html>
