@@ -34,7 +34,7 @@ angular.module('WheelApp')
         // Post back to server
 
         $http.put(
-          '/questions/question',
+          '/api/question',
           {
             _id: $scope.currentQuestion._id,
             username: $rootScope.currentUser
