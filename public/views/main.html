@@ -1,16 +1,19 @@
 <div class="container">
   <div class="form">
+    <p>
+      Hello {{ theTime }}
+    </p>
     <h3 ng-show="currentQuestion.questionText != null" class="lead text-center">{{ currentQuestion.questionText }}</h3>
     <h3 ng-hide="currentQuestion.questionText != null" class="lead text-center">No more question. Update soon.</h3>
     <!-- TEST TIMER STUFF -->
     <!-- <div id="counter"></div>> -->
     <script type="text/javascript">
-      var socket = io();
+      // var socket = io();
       // $('#counter').val();
-      socket.on('time', function(data){
-        console.log(data.time);
-      })
-    </script>>
+      // socket.on('time', function(data){
+        // console.log(data.time);
+      // })
+    </script>
     <!-- END TEST TIMER STUFF -->
     <input ng-show="authenticated" ng-model="userAnswer" type="text" class="form-control" placeholder="Type your answer here">
     <button ng-show="authenticated" class="btn btn-primary pull-right" ng-click="submitAnswer()">Answer</button>
@@ -18,22 +21,17 @@
   <div ng-show="message !== ''" class="alert" ng-class="getMessageClass()">
       {{ message }}
   </div>
-  <div ng-hide="authenticated" class="text-center">
+  <div ng-hide="authenticated">
     <p class="lead text-warning small">Please login to answer the question and earn POINTS
       <a href="#/login">Login</a>
     </p>
   </div>
-  <div id="feed" class="col-sm-offset-2 col-xs-8">
+  <div id="feed" class="col-sm-offset-2 col-md-8">
     <h5>Answers feed</h5>
-    <div class="well well-sm" ng-repeat="item in feeds | orderBy: item.answerAt : true | range:selectedPage:pageSize">
+    <div class="well well-sm" ng-repeat="item in feeds | orderBy: item.answerAt : true">
       <p>Question: {{ item.questionText }}</p>
       <small>Answered by: <strong>{{ item.answerBy }}</strong></small>
       <p><small>{{ item.answerAt | date:"MM/dd/yyyy 'at' h:mma" }}</small></p>
-    </div>
-    <div class="pull-right btn-group" >
-      <a ng-repeat="page in feeds | pageCount:pageSize" ng-click="selectPage($index + 1)" class="btn btn-default" ng-class="getPageClass($index + 1)">
-        {{ $index + 1 }}
-      </a>
     </div>
   </div>
 </div>

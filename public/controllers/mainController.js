@@ -1,19 +1,36 @@
+var socket = io();
+
 angular.module('WheelApp')
-  .controller('mainController', function ($rootScope, $scope, $http, FeedListActiveClass, FeedListCount) {
+  .controller('mainController', function ($rootScope, $scope, $http, $location) {
+
+    socket.on('time', function(data){
+      console.log(data.time);
+      $scope.theTime = data.time;
+      $scope.$apply();
+    });
+
     function getCurrentQuestion() {
       $http.get(
         '/api/question'
       ).success(function (response) {
         console.log(response);
         $scope.currentQuestion = response;
+        // questionText
+        // answerText
       });
     }
     function getFeed() {
-      $http.get('/api/feed').success(function (response) {
+      $http.get('/questions/feed').success(function (response) {
         $scope.feeds = response;
       });
     }
+
     getCurrentQuestion();
+
+    socket.on('load', function(){
+      console.log('Yo we got a new question over here');
+      getCurrentQuestion();
+    });
     // -----------------------------------
 
 
@@ -26,20 +43,22 @@ angular.module('WheelApp')
     $scope.userAnswer = "";
     $scope.message = "";
     $scope.submitAnswer = function () {
-      if ($scope.currentQuestion != null && $scope.currentQuestion.answerText.toLowerCase() == $scope.userAnswer.toLowerCase()) {
+      if ($scope.currentQuestion.answerText.toLowerCase() == $scope.userAnswer.toLowerCase()) {
+        $scope.message = "Answer is correct. You earn ten points";
         $scope.getMessageClass = function () {
           return 'alert-success';
         };
         // Post back to server
 
-        $http.put(
+        $http.post(
           '/questions/question',
           {
-            _id: $scope.currentQuestion._id,
+            questionText: $scope.currentQuestion.questionText,
+            answerText: $scope.currentQuestion.answerText,
             username: $rootScope.currentUser.username
           }
         ).success(function (response) {
-          $scope.message = response;
+          console.log(response);
           getCurrentQuestion();
           getFeed();
         });
@@ -51,14 +70,4 @@ angular.module('WheelApp')
         }
       }
     };
-    // ----------------------------------------------------------------
-
-    $scope.selectedPage = 1;
-    $scope.pageSize = FeedListCount;
-    $scope.selectPage = function (newPage) {
-      $scope.selectedPage = newPage;
-    };
-    $scope.getPageClass = function (page) {
-      return $scope.selectedPage == page ? FeedListActiveClass : "";
-    }
   });

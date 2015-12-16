@@ -4,7 +4,6 @@ npm install
 
 //use bower? grunt?
 //Travis-ci for unit testing
-//use connect-flash ? express-session ?
 
 Add frontend for stopwatch
 

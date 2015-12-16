@@ -1,6 +1,4 @@
 angular.module('WheelApp', ['ngRoute', 'ngResource'])
-  .constant('FeedListActiveClass', 'btn-primary')
-  .constant('FeedListCount', 3)
   // Initialization and log out
   .run(function ($rootScope, $http, $location) {
     // No user logged in

@@ -1,5 +1,7 @@
 var request = require('request'),
-    main = require('../server.js');
+    main = require('../server.js'),
+    mongoose = require('mongoose'),
+    Question = mongoose.model('Question');
 
 module.exports = function(app) {
   app.get('/api/question', function (req, res) {
@@ -11,4 +13,9 @@ module.exports = function(app) {
     ques.answerText = apiRes.answer;
     res.send(ques);
   });
+
+  app.put('/api/question', function (req, res) {
+
+    console.log(req.body.username);
+  })
 };
