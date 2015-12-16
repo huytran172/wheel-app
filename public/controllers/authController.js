@@ -15,7 +15,7 @@ angular.module('WheelApp')
             if (data.state == "success") {
               $rootScope.authenticated = true;
               console.log('bug');
-              $rootScope.currentUser = response.user.username;
+              $rootScope.currentUser = response.user;
               $rootScope.currentPoint = response.user.points;
               $location.path('/user');
             }
