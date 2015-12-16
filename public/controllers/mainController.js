@@ -6,7 +6,7 @@ angular.module('WheelApp')
   .controller('mainController', function (FeedPageSize, FeedPageActive, $rootScope, $scope, $http, $location, $timeout) {
 
   socket.on('time', function(data){
-    console.log(data.time);
+    // console.log(data.time);
     $scope.theTime = data.time;
     $scope.$apply();
   });
@@ -17,12 +17,14 @@ angular.module('WheelApp')
       ).success(function (response) {
         console.log(response);
         $scope.currentQuestion = response;
+        $scope.$apply();
       });
     }
 
     function getFeed() {
       $http.get('/questions/feed').success(function (response) {
         $scope.feeds = response;
+        $scope.$apply();
       });
     }
 

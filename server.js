@@ -52,6 +52,9 @@ function getNewQuestionFromAPI(){
   request('http://www.jservice.io/api/random', function (error, response, body) {
     if (!error && response.statusCode == 200) {
       q = JSON.parse(body)[0];
+      if (q.question == null){
+        getNewQuestionFromAPI();
+      }
       console.log("found a question: " + q);
     }
     else q = null;
