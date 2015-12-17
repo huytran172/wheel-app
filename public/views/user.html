@@ -13,14 +13,14 @@
       </ul>
     </div>
     <div class="col-sm-9">
-      <div class="well" ng-repeat="item in questionsList" ng-init="clicked = false">
-        <h3>
+      <div class="well" ng-repeat="item in questionsList | orderBy:true" ng-init="clicked = false">
+        <h5>
           {{ item.questionText }}
             <div class="pull-right">
               <button ng-show="clicked" class="btn btn-default" ng-click=" clicked = !clicked; ">Hide Answer</button>
               <button ng-hide="clicked" class="btn btn-default" ng-click=" clicked = !clicked; ">Show Answer</button>
             </div>
-        </h3>
+        </h5>
         <span ng-show="clicked" class="lead">{{ item.answerText }}</span>
       </div>
     </div>
