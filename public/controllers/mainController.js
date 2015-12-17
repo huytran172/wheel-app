@@ -11,7 +11,7 @@ angular.module('WheelApp')
   });
   socket.on('time', function(data){
     // console.log(data.time);
-    $scope.theTime = data.time;
+    $scope.theTime = data.time.slice(6,9);
     $scope.$apply();
   });
   function getCurrentQuestion() {
@@ -55,7 +55,8 @@ angular.module('WheelApp')
 
    $scope.submitAnswer = function () {
     if (remove_tags($scope.currentQuestion.answer.toLowerCase()) == $scope.userAnswer.toLowerCase()) {
-      $scope.message = "Answer is correct. You earn ten points";
+      $timeout(function () { $scope.message = ""; }, 3000);
+      $scope.message = "Answer is correct. You earn ten points.";
       $scope.getMessageClass = function () {
         return 'alert-success';
       };

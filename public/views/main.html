@@ -1,7 +1,7 @@
 <div class="container">
   <div class="form">
-    <p>
-      {{ theTime }}
+    <p class="text-center">
+      You have <strong>{{ theTime }}</strong> seconds left to answer this question.
     </p>
     <h3 ng-show="currentQuestion.question != null" class="lead text-center">{{ currentQuestion.question }}</h3>
     <h3 ng-hide="currentQuestion.question != null" class="lead text-center">No more question. Update soon.</h3>
