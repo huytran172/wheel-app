@@ -9,7 +9,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="user in users | orderBy:user.points:true">
+        <tr ng-repeat="user in users | orderBy:'-points'">
           <td>{{ user.username }}</td>
           <td>{{ user.points }}</td>
         </tr>

@@ -93,7 +93,7 @@ app.get('*', function (req, res) {
 	res.sendfile('public/index.html');
 });
 ////==============PORT==================
-var port = process.env.PORT || 3000; //select your port or let it pull from your .env file
+var port = process.env.PORT || 80; //select your port or let it pull from your .env file
 var server = app.listen(port);
 var io = require('socket.io').listen(server);
 console.log('Server is running on port ' + port);
